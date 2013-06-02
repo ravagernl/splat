@@ -1,0 +1,12 @@
+## Interface: 50300
+## Title: Splat
+## Author: Ravagernl
+## Notes: Splats blood on your screen when you crit.
+## Version: 0.1
+
+config.lua
+init.lua
+container.lua
+splatter.lua
+events.lua
+splat.lua
