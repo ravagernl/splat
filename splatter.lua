@@ -55,8 +55,6 @@ function addon:newSplatter(parent, active, inactive)
     obj.frame = f
 
     local t = f:CreateTexture(nil, 'BACKGROUND')
-    t:SetBlendMode'MOD'
-    --t:SetBlendMode'ADD'
     t:SetAllPoints()
     t.__splatter = obj
     obj.texture = t
