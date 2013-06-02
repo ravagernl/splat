@@ -4,9 +4,6 @@ local random = math.random
 local rad = math.random
 local tinsert = table.insert
 
-local debug = tekDebug and tekDebug:GetFrame(addon.name)
-local tostringall = tostringall
-
 local MAX_SPLAT_TEXTURES = 9
 local texturePath = ([[Interface\AddOns\%s\%%d]]):format(addon.name)
 local splatConfig = {}
@@ -36,21 +33,6 @@ local OnFadeOutFinished = function(self)
     tinsert(splatter.inactive, splatter)
     splatter.active[splatter.id] = nil
     splatter.frame:Hide()
-    if debug then
-        debug:AddMessage(splatter.id .. '\n---------------')
-    end
-end
-
-local OnAnimationUpdate = function(self, ...)
-    if debug then
-        debug:AddMessage(('name: %s%d, alpha: %.3f, progress: %.3f, update: %.3f'):format(
-            self.name,
-            self.__splatter.id,
-            self.__splatter.frame:GetAlpha(),
-            self:GetSmoothProgress(),
-            ...
-        ))
-    end
 end
 
 local id = 0
@@ -89,9 +71,6 @@ function addon:newSplatter(parent, active, inactive)
     fadein:SetOrder(1)
     fadein:SetDuration(.25)
     fadein:SetSmoothing'IN_OUT'
-    if debug then
-        fadein:SetScript('OnUpdate', OnAnimationUpdate)
-    end
     fadein.__splatter = obj
     obj.fadein = fadein
 
@@ -102,9 +81,6 @@ function addon:newSplatter(parent, active, inactive)
     fadeout:SetDuration(2.75)
     fadeout:SetStartDelay(1)
     fadeout:SetSmoothing'IN_OUT'
-    if debug then
-        fadeout:SetScript('OnUpdate', OnAnimationUpdate)
-    end
     fadeout:SetScript('OnFinished', OnFadeOutFinished)
     fadeout.__splatter = obj
     obj.fadeout = fadeout
