@@ -27,7 +27,6 @@ local show = function(self)
     self.animations:Play()
 end
 
--- removes it from the parent
 local OnFadeOutFinished = function(self)
     local splatter = self.__splatter
     tinsert(splatter.inactive, splatter)
