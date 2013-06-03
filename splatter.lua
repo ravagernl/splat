@@ -9,12 +9,17 @@ local texturePath = ([[Interface\AddOns\%s\%%d]]):format(addon.name)
 local splatConfig = {}
 
 -- auto change appearance on each show.
-local show = function(self)
+local show = function(self, parent)
+
+    if parent then
+        self.frame:SetParent(parent)
+    end
+
     self.texture:SetTexture(texturePath:format(random(MAX_SPLAT_TEXTURES)))
     --self.texture:SetTexture(.5, .5, .5, .5)
 
-    local x = random() * ((self.parent:GetWidth() - self.frame:GetWidth()) / 2)
-    local y = random() * ((self.parent:GetHeight() - self.frame:GetHeight()) / 2)
+    local x = random() * ((self.frame:GetParent():GetWidth() - self.frame:GetWidth()) / 2)
+    local y = random() * ((self.frame:GetParent():GetHeight() - self.frame:GetHeight()) / 2)
     self.frame:ClearAllPoints()
     self.frame:SetPoint('CENTER', random() > .5 and -x or x, random() > .5 and -y or y)
 
@@ -35,10 +40,9 @@ local OnFadeOutFinished = function(self)
 end
 
 local id = 0
-function addon:newSplatter(parent, active, inactive)
+function addon:newSplatter(active, inactive)
     local obj = {}
     obj.Show = show
-    obj.parent = parent
     obj.active = active
     obj.inactive = inactive
 
@@ -46,7 +50,7 @@ function addon:newSplatter(parent, active, inactive)
     obj.id = id
     tinsert(inactive, splatter)
 
-    local f = CreateFrame('Frame', nil, parent)
+    local f = CreateFrame'Frame'
     f:SetSize(256, 256)
     f:SetAlpha(0)
     f:Hide()

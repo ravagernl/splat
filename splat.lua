@@ -4,9 +4,10 @@ local tremove = table.remove
 
 local container, active, inactive = addon.container, {}, {}
 
-function addon:Splat()
-    local splatter = tremove(inactive) or self:newSplatter(container, active, inactive)
-    splatter:Show()
+function addon:Splat(customContainer)
+    local splatter = tremove(inactive) or self:newSplatter(active, inactive)
+    splatter:Show(customContainer or container)
+    return splatter
 end
 
 addon.active = active
